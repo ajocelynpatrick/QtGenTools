@@ -45,15 +45,16 @@ Synopsis:
 	  --uicOpts=<opts>  Command line options given to uic
 	  --rccOpts=<opts>  Command line options given to rcc
 
-	  
+
+
 Example of use:
 ---------------
 
 	QtGenTools --inD=YourProjectDir --outD=YourProjectDir/QtGen
 				--mocOpts=-b"stdafx.h"
 	
-	This command will parse YourProjectDir and parse all Qt input files,
-	run the appropriate tool and place generated code files in 
+	This command will parse YourProjectDir, find all Qt input files,
+	run the appropriate tools and place generated code files in 
 	YourProjectDir/QtGen.
 	In addition, with this example, meta-object files will have 
 	#include "stdafx.h" as first directive, and be compatible with
