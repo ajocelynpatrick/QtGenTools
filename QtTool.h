@@ -46,7 +46,7 @@ public:
 	virtual std::string getOutFilename (const std::string& inFilename) =0;
 
 	virtual bool needsToRun(const std::string& inFile, const std::string& outFile);
-	
+
 	virtual bool runIfNeeded(const std::string& inFile, const std::string& outFile);
 
 	void setCmdOpts(const std::string& cmdOpts) {
@@ -78,7 +78,7 @@ public:
 
 	virtual std::string exePath(const std::string& qtBinPath) override;
 	virtual bool isFileInput(const std::string& inFile) override;
-	virtual std::string getOutFilename (const std::string& inFilename) override; 
+	virtual std::string getOutFilename (const std::string& inFilename) override;
 
 };
 

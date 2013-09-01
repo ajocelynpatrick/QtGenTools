@@ -48,10 +48,10 @@ bool QtTool::needsToRun(const std::string& inFile, const std::string& outFile)
 {
 #ifdef _WIN32
 	HANDLE hInFile = CreateFile(inFile.c_str(), GENERIC_READ, FILE_SHARE_READ, NULL,
-        OPEN_EXISTING, 0, NULL);
+	                            OPEN_EXISTING, 0, NULL);
 	HANDLE hOutFile = CreateFile(outFile.c_str(), GENERIC_READ, FILE_SHARE_READ, NULL,
-        OPEN_EXISTING, 0, NULL);
-	
+	                             OPEN_EXISTING, 0, NULL);
+
 	if(hInFile == INVALID_HANDLE_VALUE) {
 		return false;
 	}
@@ -94,11 +94,11 @@ bool QtTool::runIfNeeded(const std::string& inFile, const std::string& outFile)
 		saAttr.lpSecurityDescriptor = NULL;
 
 		outFileH = CreateFile(outFile.c_str(), GENERIC_WRITE, FILE_SHARE_READ,
-			&saAttr, CREATE_ALWAYS, 0, NULL);
+		                      &saAttr, CREATE_ALWAYS, 0, NULL);
 		if (outFileH == INVALID_HANDLE_VALUE) {
 			throw runtime_error("could not create output file");
 		}
-		
+
 		ZeroMemory(&pi, sizeof(pi));
 		ZeroMemory(&si, sizeof(si));
 		si.cb = sizeof(si);
@@ -121,20 +121,19 @@ bool QtTool::runIfNeeded(const std::string& inFile, const std::string& outFile)
 		size_t i = min(size_t(bufSize-1), cmdOpts.size());
 		buf[i] = '\0';
 
-		// Start the child process. 
+		// Start the child process.
 		if( !CreateProcess(
-			NULL,			// module name
-			buf,	        // Command line
-			NULL,           // Process handle not inheritable
-			NULL,           // Thread handle not inheritable
-			TRUE,           // Set handle inheritance to TRUE
-			0,              // No creation flags
-			NULL,           // Use parent's environment block
-			NULL,           // Use parent's starting directory 
-			&si,            // Pointer to STARTUPINFO structure
-			&pi )           // Pointer to PROCESS_INFORMATION structure
-		) 
-		{
+		            NULL,			// module name
+		            buf,	        // Command line
+		            NULL,           // Process handle not inheritable
+		            NULL,           // Thread handle not inheritable
+		            TRUE,           // Set handle inheritance to TRUE
+		            0,              // No creation flags
+		            NULL,           // Use parent's environment block
+		            NULL,           // Use parent's starting directory
+		            &si,            // Pointer to STARTUPINFO structure
+		            &pi )           // Pointer to PROCESS_INFORMATION structure
+		  ) {
 			cerr << "CreateProcess err " << GetLastError() << "\n";
 			throw runtime_error("cannot start process");
 			return false;
@@ -169,9 +168,9 @@ string QtMocTool::exePath(const string& qtBinPath)
 bool QtMocTool::isFileInput(const string& inFile)
 {
 	if (!endsWith(inFile, string(".h")) &&
-		!endsWith(inFile, string(".hpp")) &&
-		!endsWith(inFile, string(".hh")) &&
-		!endsWith(inFile, string(".hxx"))) {
+	        !endsWith(inFile, string(".hpp")) &&
+	        !endsWith(inFile, string(".hh")) &&
+	        !endsWith(inFile, string(".hxx"))) {
 		return false;
 	}
 
@@ -195,7 +194,8 @@ bool QtMocTool::isFileInput(const string& inFile)
 
 std::string QtMocTool::getOutFilename (const string& inFileName)
 {
-	string base; string ext;
+	string base;
+	string ext;
 	tie(base, ext) = fs::splitExt(inFileName);
 
 	ostringstream oss;
@@ -226,7 +226,8 @@ bool QtUicTool::isFileInput(const string& inFile)
 
 string QtUicTool::getOutFilename (const string& inFileName)
 {
-	string base; string ext;
+	string base;
+	string ext;
 	tie(base, ext) = fs::splitExt(inFileName);
 
 	ostringstream oss;
@@ -260,7 +261,8 @@ bool QtRccTool::isFileInput(const string& inFile)
 
 string QtRccTool::getOutFilename (const string& inFileName)
 {
-	string base; string ext;
+	string base;
+	string ext;
 	tie(base, ext) = fs::splitExt(inFileName);
 
 	ostringstream oss;

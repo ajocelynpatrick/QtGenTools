@@ -35,13 +35,13 @@
 namespace fs {
 
 
-	#ifdef _WIN32
+#ifdef _WIN32
 	const char pathSep = '\\';
 	const char pathVarSep = ';';
-	#else
+#else
 	const char pathSep = '/';
 	const char pathVarSep = ':';
-	#endif
+#endif
 
 
 
@@ -49,41 +49,45 @@ namespace fs {
 
 	template<typename CharT>
 	inline std::tuple<std::basic_string<CharT>, std::basic_string<CharT> >
-			splitExt(const std::basic_string<CharT>& filename)
+	splitExt(const std::basic_string<CharT>& filename)
 	{
 		size_t pos = filename.rfind(CharT('.'));
 		if (pos == std::basic_string<CharT>::npos) {
 			return std::make_tuple(filename, std::basic_string<CharT>());
 		}
-	
+
 		return std::make_tuple(filename.substr(0, pos), filename.substr(pos));
 	}
 
 
 
-	inline bool exists(const std::string& path) {
+	inline bool exists(const std::string& path)
+	{
 		return (INVALID_FILE_ATTRIBUTES != GetFileAttributes(path.c_str()));
 	}
 
-	inline bool isFile(const std::string& path) {
+	inline bool isFile(const std::string& path)
+	{
 		DWORD attr = GetFileAttributes(path.c_str());
 		return (attr != INVALID_FILE_ATTRIBUTES) && !(attr & FILE_ATTRIBUTE_DIRECTORY);
 	}
 
-	inline bool isDir(const std::string& path) {
+	inline bool isDir(const std::string& path)
+	{
 		DWORD attr = GetFileAttributes(path.c_str());
 		return (attr != INVALID_FILE_ATTRIBUTES) && (attr & FILE_ATTRIBUTE_DIRECTORY);
 	}
 
 
 	template<typename CharT>
-	std::basic_string<CharT> parentDir(const std::basic_string<CharT>& path) {
+	std::basic_string<CharT> parentDir(const std::basic_string<CharT>& path)
+	{
 		size_t startPos = std::basic_string<CharT>::npos;
 		if (path.back() == CharT(pathSep)) {
 			startPos = path.size()-2;
 		}
 		size_t pos = path.rfind(CharT(pathSep), startPos);
-		
+
 		return path.substr(0, pos+1);
 	}
 
@@ -104,7 +108,7 @@ namespace fs {
 		}
 
 		do {
-		
+
 			if (!reportDirs && ffd.dwFileAttributes == FILE_ATTRIBUTE_DIRECTORY) {
 				continue;
 			}
@@ -124,7 +128,7 @@ namespace fs {
 	template<class ActionT>
 	void walk(std::string root, ActionT& action, bool reportDirs=false)
 	{
-	
+
 		WIN32_FIND_DATA ffd;
 		HANDLE hFile;
 
@@ -141,7 +145,7 @@ namespace fs {
 		do {
 			std::string filename = std::string(ffd.cFileName);
 			if (filename.front() == '.') continue;
-		
+
 			if (ffd.dwFileAttributes == FILE_ATTRIBUTE_DIRECTORY) {
 				if (reportDirs) {
 					action(root, filename, true);

@@ -87,7 +87,7 @@ string guessQtBinPath()
 string qtBinPath;
 string inD;
 string outD;
-	
+
 QtMocTool moc;
 QtUicTool uic;
 QtRccTool rcc;
@@ -98,7 +98,7 @@ class Driver {
 public:
 
 	void run() {
-		
+
 		tools_.clear();
 		oldFiles_.clear();
 		newFiles_.clear();
@@ -115,7 +115,7 @@ public:
 		for (int i=0; i<3; ++i) {
 			tools_[i]->init(qtBinPath);
 		}
-		
+
 		if (inD.back() != fs::pathSep) inD.push_back(fs::pathSep);
 		if (outD.back() != fs::pathSep) outD.push_back(fs::pathSep);
 
@@ -129,10 +129,10 @@ public:
 		for (size_t i=0; i<oldFiles_.size(); ++i) {
 			oldFiles_[i] = outD + oldFiles_[i];
 		}
-		
+
 		fs::walk(inD, *this);
 
-		
+
 		for (size_t i=0; i<oldFiles_.size(); ++i) {
 			auto found = find(newFiles_.begin(), newFiles_.end(), oldFiles_[i]);
 			if (found == newFiles_.end()) {
@@ -172,12 +172,12 @@ public:
 			}
 			cout << sep << '\n';
 		}
-		
+
 		cout << untouchedFiles_.size() << " file(s) were already up-to-date\n";
 		cout << genFiles_.size() << " file(s) have been generated\n";
 		cout << updatedFiles_.size() << " file(s) have been updated\n";
 		cout << deletedFiles_.size() << " file(s) have been deleted\n";
-		
+
 		if (errors_.size() > 0) {
 			cout << sep << '\n';
 			cout << "error occured when processing the following file(s):\n";
@@ -193,9 +193,9 @@ public:
 		string inFile = root + filename;
 
 		for (int i=0; i<3; ++i) {
-			QtTool * tool = tools_[i];
+			QtTool *tool = tools_[i];
 			if(tool->isFileInput(inFile)) {
-				
+
 				string outFilename = tool->getOutFilename(filename);
 				string outFile = outD + outFilename;
 
@@ -226,7 +226,7 @@ public:
 	}
 
 private:
-	
+
 	vector<QtTool *> tools_;
 	vector<string> oldFiles_;
 	vector<string> newFiles_;
@@ -247,11 +247,11 @@ void usage(const string& err)
 		cout << "Error: " << err << "\n";
 	}
 	cout << "Options:\n"
-		<< "  --inD=<in_dir>    Specify the input directory (mandatory)\n"
-		<< "  --outD=<out_dir>  Specify the output directory (mandatory)\n"
-		<< "  --mocOpts=<opts>  Command line options given to moc\n"
-		<< "  --uicOpts=<opts>  Command line options given to uic\n"
-		<< "  --rccOpts=<opts>  Command line options given to rcc\n";
+	     << "  --inD=<in_dir>    Specify the input directory (mandatory)\n"
+	     << "  --outD=<out_dir>  Specify the output directory (mandatory)\n"
+	     << "  --mocOpts=<opts>  Command line options given to moc\n"
+	     << "  --uicOpts=<opts>  Command line options given to uic\n"
+	     << "  --rccOpts=<opts>  Command line options given to rcc\n";
 }
 
 

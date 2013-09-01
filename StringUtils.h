@@ -59,9 +59,9 @@ inline std::basic_string<CharT>& trim(std::basic_string<CharT>& s)
 
 template<typename CharT>
 inline std::basic_string<CharT>& replace(
-			std::basic_string<CharT>& s,
-			const std::basic_string<CharT>& pattern,
-			const std::basic_string<CharT>& repl)
+    std::basic_string<CharT>& s,
+    const std::basic_string<CharT>& pattern,
+    const std::basic_string<CharT>& repl)
 {
 	size_t pos = s.find(pattern);
 	size_t len = pattern.size();
