@@ -31,74 +31,78 @@
 #include <cctype>
 
 
-// trim from start
-template<typename CharT>
-inline std::basic_string<CharT>& ltrim(std::basic_string<CharT>& s)
-{
-	s.erase(s.begin(), find_if(s.begin(), s.end(), not1(ptr_fun<int, int>(isspace))));
-	return s;
-}
+namespace su {
 
-// trim from end
-template<typename CharT>
-inline std::basic_string<CharT>& rtrim(std::basic_string<CharT>& s)
-{
-	s.erase(find_if(s.rbegin(), s.rend(), not1(ptr_fun<int, int>(isspace))).base(), s.end());
-	return s;
-}
-
-// trim from both ends
-template<typename CharT>
-inline std::basic_string<CharT>& trim(std::basic_string<CharT>& s)
-{
-	return ltrim(rtrim(s));
-}
-
-
-
-
-template<typename CharT>
-inline std::basic_string<CharT>& replace(
-			std::basic_string<CharT>& s,
-			const std::basic_string<CharT>& pattern,
-			const std::basic_string<CharT>& repl)
-{
-	size_t pos = s.find(pattern);
-	size_t len = pattern.size();
-	while (pos != string::npos) {
-		s.replace(pos, len, repl);
-		pos = s.find(pattern);
+	// trim from start
+	template<typename CharT>
+	inline std::basic_string<CharT>& ltrim(std::basic_string<CharT>& s)
+	{
+		s.erase(s.begin(), find_if(s.begin(), s.end(), not1(ptr_fun<int, int>(isspace))));
+		return s;
 	}
-	return s;
-}
 
-
-template<typename CharT, class OutputIt>
-inline void split(const std::basic_string<CharT>& s, CharT delim, OutputIt out)
-{
-	std::basic_istringstream<CharT> iss (s);
-	std::basic_string<CharT> elem;
-	while (getline(iss, elem, delim)) {
-		*out = elem;
-		++out;
+	// trim from end
+	template<typename CharT>
+	inline std::basic_string<CharT>& rtrim(std::basic_string<CharT>& s)
+	{
+		s.erase(find_if(s.rbegin(), s.rend(), not1(ptr_fun<int, int>(isspace))).base(), s.end());
+		return s;
 	}
-}
+
+	// trim from both ends
+	template<typename CharT>
+	inline std::basic_string<CharT>& trim(std::basic_string<CharT>& s)
+	{
+		return ltrim(rtrim(s));
+	}
 
 
 
-template<typename CharT>
-inline bool beginsWith(const std::basic_string<CharT>& str, const std::basic_string<CharT>& pattern)
-{
-	size_t pos = str.find(pattern);
-	return pos == 0;
-}
+
+	template<typename CharT>
+	inline std::basic_string<CharT>& replace(
+		std::basic_string<CharT>& s,
+		const std::basic_string<CharT>& pattern,
+		const std::basic_string<CharT>& repl)
+	{
+		size_t pos = s.find(pattern);
+		size_t len = pattern.size();
+		while (pos != std::string::npos) {
+			s.replace(pos, len, repl);
+			pos = s.find(pattern);
+		}
+		return s;
+	}
+
+
+	template<typename CharT, class OutputIt>
+	inline void split(const std::basic_string<CharT>& s, CharT delim, OutputIt out)
+	{
+		std::basic_istringstream<CharT> iss (s);
+		std::basic_string<CharT> elem;
+		while (getline(iss, elem, delim)) {
+			*out = elem;
+			++out;
+		}
+	}
 
 
 
-template<typename CharT>
-inline bool endsWith(const std::basic_string<CharT>& str, const std::basic_string<CharT>& pattern)
-{
-	size_t pos = str.find(pattern);
-	if (pos == std::basic_string<CharT>::npos) return false;
-	return pos == (str.size() - pattern.size());
+	template<typename CharT>
+	inline bool beginsWith(const std::basic_string<CharT>& str, const std::basic_string<CharT>& pattern)
+	{
+		size_t pos = str.find(pattern);
+		return pos == 0;
+	}
+
+
+
+	template<typename CharT>
+	inline bool endsWith(const std::basic_string<CharT>& str, const std::basic_string<CharT>& pattern)
+	{
+		size_t pos = str.find(pattern);
+		if (pos == std::basic_string<CharT>::npos) return false;
+		return pos == (str.size() - pattern.size());
+	}
+
 }

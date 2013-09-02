@@ -5,3 +5,9 @@ ipch/
 *.suo
 *.opensdf
 *.sdf
+CMakeFiles/
+cmake_install.cmake
+CMakeCache.txt
+Makefile
+QtGenTools.exe
+QtGenTools.exe.manifest
