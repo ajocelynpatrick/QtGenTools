@@ -167,10 +167,10 @@ string QtMocTool::exePath(const string& qtBinPath)
 
 bool QtMocTool::isFileInput(const string& inFile)
 {
-	if (!endsWith(inFile, string(".h")) &&
-	        !endsWith(inFile, string(".hpp")) &&
-	        !endsWith(inFile, string(".hh")) &&
-	        !endsWith(inFile, string(".hxx"))) {
+	if (!su::endsWith(inFile, string(".h")) &&
+	        !su::endsWith(inFile, string(".hpp")) &&
+	        !su::endsWith(inFile, string(".hh")) &&
+	        !su::endsWith(inFile, string(".hxx"))) {
 		return false;
 	}
 
@@ -196,7 +196,7 @@ std::string QtMocTool::getOutFilename (const string& inFileName)
 {
 	string base;
 	string ext;
-	tie(base, ext) = fs::splitExt(inFileName);
+	tie(base, ext) = fu::splitExt(inFileName);
 
 	ostringstream oss;
 	oss << "mo_" << base << ".cc";
@@ -216,7 +216,7 @@ string QtUicTool::exePath(const string& qtBinPath)
 
 bool QtUicTool::isFileInput(const string& inFile)
 {
-	if (!endsWith(inFile, string(".ui"))) {
+	if (!su::endsWith(inFile, string(".ui"))) {
 		return false;
 	}
 	return true;
@@ -228,7 +228,7 @@ string QtUicTool::getOutFilename (const string& inFileName)
 {
 	string base;
 	string ext;
-	tie(base, ext) = fs::splitExt(inFileName);
+	tie(base, ext) = fu::splitExt(inFileName);
 
 	ostringstream oss;
 	oss << "ui_" << base << ".h";
@@ -251,7 +251,7 @@ string QtRccTool::exePath(const string& qtBinPath)
 
 bool QtRccTool::isFileInput(const string& inFile)
 {
-	if (!endsWith(inFile, string(".qrc"))) {
+	if (!su::endsWith(inFile, string(".qrc"))) {
 		return false;
 	}
 	return true;
@@ -263,7 +263,7 @@ string QtRccTool::getOutFilename (const string& inFileName)
 {
 	string base;
 	string ext;
-	tie(base, ext) = fs::splitExt(inFileName);
+	tie(base, ext) = fu::splitExt(inFileName);
 
 	ostringstream oss;
 	oss << "rc_" << base << ".cc";
@@ -280,7 +280,7 @@ bool QtRccTool::needsToRun(const std::string& inFile, const std::string& outFile
 	}
 	bool run = false;
 
-	string baseDir = fs::parentDir(inFile);
+	string baseDir = fu::parentDir(inFile);
 
 	ifstream in (inFile);
 	string line;

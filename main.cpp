@@ -55,17 +55,17 @@ string guessQtBinPath()
 	char *qt = getenv("QT5");
 	if (!qt) {
 		qtBinPath = string(qt);
-		if (qtBinPath.back() != fs::pathSep) qtBinPath.push_back(fs::pathSep);
+		if (qtBinPath.back() != fu::pathSep) qtBinPath.push_back(fu::pathSep);
 		qtBinPath.append("bin");
-		qtBinPath.push_back(fs::pathSep);
+		qtBinPath.push_back(fu::pathSep);
 	}
 	else {
 		string path = string(getenv("PATH"));
 		vector<string> pathComps;
-		split(path, fs::pathVarSep, back_inserter(pathComps));
+		su::split(path, fu::pathVarSep, back_inserter(pathComps));
 		for (size_t i=0; i<pathComps.size(); ++i) {
 			string p = pathComps[i];
-			if (p.back() != fs::pathSep) p.push_back(fs::pathSep);
+			if (p.back() != fu::pathSep) p.push_back(fu::pathSep);
 #ifdef _WIN32
 			string qmake = p + string("qmake.exe");
 #else
@@ -116,21 +116,21 @@ public:
 			tools_[i]->init(qtBinPath);
 		}
 
-		if (inD.back() != fs::pathSep) inD.push_back(fs::pathSep);
-		if (outD.back() != fs::pathSep) outD.push_back(fs::pathSep);
+		if (inD.back() != fu::pathSep) inD.push_back(fu::pathSep);
+		if (outD.back() != fu::pathSep) outD.push_back(fu::pathSep);
 
-		if (!fs::isDir(outD)) {
+		if (!fu::isDir(outD)) {
 			if (!CreateDirectory(outD.c_str(), NULL)) {
 				throw runtime_error("could not create the output directory");
 			}
 		}
 
-		fs::listDir(outD, back_inserter(oldFiles_));
+		fu::listDir(outD, back_inserter(oldFiles_));
 		for (size_t i=0; i<oldFiles_.size(); ++i) {
 			oldFiles_[i] = outD + oldFiles_[i];
 		}
 
-		fs::walk(inD, *this);
+		fu::walk(inD, *this);
 
 
 		for (size_t i=0; i<oldFiles_.size(); ++i) {
@@ -200,7 +200,7 @@ public:
 				string outFile = outD + outFilename;
 
 				try {
-					bool existed = fs::isFile(outFile);
+					bool existed = fu::isFile(outFile);
 
 					if (tool->runIfNeeded(inFile, outFile)) {
 						if (existed) {
@@ -261,24 +261,24 @@ int main (int argc, char *argv[])
 
 	for (int i=1; i<argc; ++i) {
 		string arg = string(argv[i]);
-		if (beginsWith(arg, string("--qt="))) {
+		if (su::beginsWith(arg, string("--qt="))) {
 			qtBinPath = arg.substr(5);
 			if (qtBinPath.back() == '\\') qtBinPath.push_back('\\');
 			qtBinPath += "bin\\";
 		}
-		else if (beginsWith(arg, string("--inD="))) {
+		else if (su::beginsWith(arg, string("--inD="))) {
 			inD = arg.substr(6);
 		}
-		else if (beginsWith(arg, string("--outD="))) {
+		else if (su::beginsWith(arg, string("--outD="))) {
 			outD = arg.substr(7);
 		}
-		else if (beginsWith(arg, string("--mocOpts="))) {
+		else if (su::beginsWith(arg, string("--mocOpts="))) {
 			moc.setCmdOpts(arg.substr(10));
 		}
-		else if (beginsWith(arg, string("--uicOpts="))) {
+		else if (su::beginsWith(arg, string("--uicOpts="))) {
 			uic.setCmdOpts(arg.substr(10));
 		}
-		else if (beginsWith(arg, string("--rccOpts="))) {
+		else if (su::beginsWith(arg, string("--rccOpts="))) {
 			rcc.setCmdOpts(arg.substr(10));
 		}
 	}
@@ -292,7 +292,7 @@ int main (int argc, char *argv[])
 		return 1;
 	}
 
-	if (!fs::isDir(qtBinPath)) {
+	if (!fu::isDir(qtBinPath)) {
 		usage("qt bin directory is not valid");
 		return 1;
 	}
@@ -302,7 +302,7 @@ int main (int argc, char *argv[])
 		return 1;
 	}
 
-	if (!fs::isDir(inD)) {
+	if (!fu::isDir(inD)) {
 		usage("input directory is not valid");
 		return 1;
 	}
