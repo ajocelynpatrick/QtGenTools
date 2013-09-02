@@ -114,7 +114,7 @@ namespace fu {
 			}
 			if (ffd.cFileName[0] == '.') continue;
 
-			*out = string(ffd.cFileName);
+			*out = std::string(ffd.cFileName);
 			++out;
 
 		}

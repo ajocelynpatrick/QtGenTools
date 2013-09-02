@@ -67,7 +67,7 @@ namespace su {
 	{
 		size_t pos = s.find(pattern);
 		size_t len = pattern.size();
-		while (pos != string::npos) {
+		while (pos != std::string::npos) {
 			s.replace(pos, len, repl);
 			pos = s.find(pattern);
 		}
