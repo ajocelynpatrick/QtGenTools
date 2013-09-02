@@ -15,21 +15,26 @@ Description:
 	For each input file, it compares last modification date and do not
 	modify the output file if not necessary. For rcc, if does the same
 	comparison with the input files too.
+	
+	This utility is useful if you want to use Qt without qmake, for example
+	with Microsoft Visual C++ Express.
 
-	Files written by moc are prefixed by "mo_".
-	Files written by uic are prefixed by "ui_".
-	Files written by rcc are prefixed by "rc_".
+
+	Moc:
+		input files must be header (with extension .h, .hpp, .hh, .hxx) and
+		contain the string 'Q_OBJECT'. Output files are C++ source prefixed
+		by "mo_" and with extension ".cc"
 	
-	This utility is useful if you want to use Qt without qmake, and don't
-	have a proper IDE Qt plugin to handle that for you.
+	Uic:
+		Input files must have extension .ui. Output files are C++ headers prefixed
+		by "ui_" and with extension ".h"
+	
+	Rcc:
+		Input files must have extension .qrc. Output files are C++ source prefixed
+		by "rc_" and with extension ".cc"
 	
 	
-	Moc input files must be header (with extension .h, .hpp, .hh, .hxx) and
-	contain the string 'Q_OBJECT'
-	
-	Uic input files must have extension .ui
-	
-	Rcc input files must have extension .qrc
+	The generated files can be afterwards added in your IDE project or build system.
 	
 	
 	
@@ -61,6 +66,6 @@ Example of use:
 	precompiled headers.
 	
 	This command can be added as a pre build step in your favorite IDE or
-	build system.
+	build system in order to updated generated files when needed.
 	
 Enjoy!
