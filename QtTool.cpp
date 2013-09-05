@@ -86,24 +86,12 @@ bool QtTool::runIfNeeded(const std::string& inFile, const std::string& outFile)
 
 		STARTUPINFO si;
 		PROCESS_INFORMATION pi;
-		HANDLE outFileH;
-
-		SECURITY_ATTRIBUTES saAttr;
-		saAttr.nLength = sizeof(SECURITY_ATTRIBUTES);
-		saAttr.bInheritHandle = TRUE;
-		saAttr.lpSecurityDescriptor = NULL;
-
-		outFileH = CreateFile(outFile.c_str(), GENERIC_WRITE, FILE_SHARE_READ,
-		                      &saAttr, CREATE_ALWAYS, 0, NULL);
-		if (outFileH == INVALID_HANDLE_VALUE) {
-			throw runtime_error("could not create output file");
-		}
 
 		ZeroMemory(&pi, sizeof(pi));
 		ZeroMemory(&si, sizeof(si));
 		si.cb = sizeof(si);
 		si.hStdError = GetStdHandle(STD_ERROR_HANDLE);
-		si.hStdOutput = outFileH;
+		si.hStdOutput = GetStdHandle(STD_OUTPUT_HANDLE);
 		si.hStdInput = NULL;
 		si.dwFlags |= STARTF_USESTDHANDLES;
 
@@ -112,7 +100,7 @@ bool QtTool::runIfNeeded(const std::string& inFile, const std::string& outFile)
 		if (cmdOpts_.size() > 0) {
 			cmd << " " << cmdOpts_;
 		}
-		cmd << " " << inFile;
+		cmd << " -o " << outFile << " " << inFile;
 		string cmdOpts = cmd.str();
 		for(size_t i=0; i<cmdOpts.size(); ++i) {
 			buf[i] = cmdOpts[i];
@@ -145,9 +133,6 @@ bool QtTool::runIfNeeded(const std::string& inFile, const std::string& outFile)
 		}
 		if (!CloseHandle(pi.hThread)) {
 			cerr << "close handle thread\n";
-		}
-		if (!CloseHandle(outFileH)) {
-			cerr << "close handle out file\n";
 		}
 
 		return true;
