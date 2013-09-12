@@ -66,6 +66,7 @@
     <ClInclude Include="..\..\FileUtils.h" />
     <ClInclude Include="..\..\QtTool.h" />
     <ClInclude Include="..\..\StringUtils.h" />
+    <ClInclude Include="..\..\Version.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\main.cpp" />
