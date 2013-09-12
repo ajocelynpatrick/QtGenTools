@@ -50,12 +50,12 @@ BEGIN
         BLOCK "040904E4"
         BEGIN
             VALUE "CompanyName",      "RTbo"
-            VALUE "FileDescription",  "Qt Code Generator Tools Utility\0"
+            VALUE "FileDescription",  "Qt Code Generator Tools Utility"
             VALUE "FileVersion",      VERSION_STR
             VALUE "InternalName",     "QtGenTools"
-            VALUE "LegalCopyright",   "Copyright (C) Remi Thebault 2013\0"
+            VALUE "LegalCopyright",   "Copyright (C) Remi Thebault 2013"
             VALUE "OriginalFilename", "QtGenTools.exe"
-            VALUE "ProductName",      "QtGenTools\0"
+            VALUE "ProductName",      "QtGenTools"
             VALUE "ProductVersion",   VERSION_STR
         END
     END
