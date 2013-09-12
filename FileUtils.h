@@ -26,7 +26,14 @@
 */
 #pragma once
 
+#ifdef _WIN32
 #include <Windows.h>
+#else
+#include <dirent.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <unistd.h>
+#endif
 
 #include <string>
 #include <tuple>
@@ -63,20 +70,59 @@ namespace fu {
 
 	inline bool exists(const std::string& path)
 	{
+#ifdef _WIN32
 		return (INVALID_FILE_ATTRIBUTES != GetFileAttributes(path.c_str()));
+#else
+		struct stat st;
+		int res = stat(path.c_str(), &st);
+		return res == 0;
+#endif
 	}
 
 	inline bool isFile(const std::string& path)
 	{
+#ifdef _WIN32
 		DWORD attr = GetFileAttributes(path.c_str());
 		return (attr != INVALID_FILE_ATTRIBUTES) && !(attr & FILE_ATTRIBUTE_DIRECTORY);
+#else
+		struct stat st;
+		int res = stat(path.c_str(), &st);
+		return (res==0 && S_ISREG(st.st_mode));
+#endif
 	}
 
 	inline bool isDir(const std::string& path)
 	{
+#ifdef _WIN32
 		DWORD attr = GetFileAttributes(path.c_str());
 		return (attr != INVALID_FILE_ATTRIBUTES) && (attr & FILE_ATTRIBUTE_DIRECTORY);
+#else
+		struct stat st;
+		int res = stat(path.c_str(), &st);
+		return (res==0 && S_ISDIR(st.st_mode));
+#endif
 	}
+
+
+	inline bool mkDir(const std::string& path, const unsigned int& perm=0755)
+	{
+#ifdef _WIN32
+		return FALSE != CreateDirectory(path.c_str(), NULL);
+#else
+		return 0 == mkdir(path.c_str(), perm);
+#endif
+	}
+
+
+	inline bool rm(const std::string& path)
+	{
+#ifdef _WIN32
+		return FALSE != DeleteFile(path.c_str());
+#else
+		return 0 == unlink(path.c_str());
+#endif
+	}
+
 
 
 	template<typename CharT>
@@ -92,13 +138,23 @@ namespace fu {
 	}
 
 
+
+
+
+
 	template<class OutputIt>
-	void listDir(std::string dir, OutputIt out, bool reportDirs = false, std::string filter="*")
+	void listDir(std::string dir, OutputIt out, bool reportDirs = false
+#ifdef _WIN32
+		,std::string filter="*"
+#endif
+		)
 	{
-		WIN32_FIND_DATA ffd;
-		HANDLE hFile;
 
 		if (dir.back() != pathSep) dir.push_back(pathSep);
+
+#ifdef _WIN32
+		WIN32_FIND_DATA ffd;
+		HANDLE hFile;
 
 		dir += filter;
 
@@ -121,6 +177,29 @@ namespace fu {
 		while(FindNextFile(hFile, &ffd) != 0);
 
 		FindClose(hFile);
+#else
+		DIR *dp;
+		dp = opendir(dir.c_str());
+		if (dp != NULL) {
+			struct dirent *ep;
+			while ((ep = readdir(dp))) {
+				if (ep->d_name[0] == '.') continue;
+
+				std::string path(ep->d_name);
+				std::string completePath = dir + path;
+
+				if (reportDirs) {
+					*out = path;
+					++out;
+				}
+				else if (!isDir(completePath)) {
+					*out = path;
+					++out;
+				}
+			}
+			closedir(dp);
+		}
+#endif
 	}
 
 
@@ -129,10 +208,11 @@ namespace fu {
 	void walk(std::string root, ActionT& action, bool reportDirs=false)
 	{
 
+		if (root.back() != pathSep) root.push_back(pathSep);
+
+#ifdef _WIN32
 		WIN32_FIND_DATA ffd;
 		HANDLE hFile;
-
-		if (root.back() != pathSep) root.push_back(pathSep);
 
 		std::string rootPattern = root;
 		rootPattern.push_back('*');
@@ -159,6 +239,30 @@ namespace fu {
 		while(FindNextFile(hFile, &ffd) != 0);
 
 		FindClose(hFile);
+#else
+		DIR *dp;
+		dp = opendir(root.c_str());
+		if (dp != NULL) {
+			struct dirent *ep;
+			while ((ep = readdir(dp))) {
+				if (ep->d_name[0] == '.') continue;
+
+				std::string path(ep->d_name);
+				std::string completePath = root + path;
+
+				if (isDir(completePath)) {
+					if (reportDirs) {
+						action(root, path, true);
+					}
+					walk(root + path, action, reportDirs);
+				}
+				else {
+					action(root, path, false);
+				}
+			}
+			closedir(dp);
+		}
+#endif
 	}
 
 }

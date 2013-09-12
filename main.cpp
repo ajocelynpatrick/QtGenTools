@@ -120,7 +120,7 @@ public:
 		if (outD.back() != fu::pathSep) outD.push_back(fu::pathSep);
 
 		if (!fu::isDir(outD)) {
-			if (!CreateDirectory(outD.c_str(), NULL)) {
+			if (!fu::mkDir(outD)) {
 				throw runtime_error("could not create the output directory");
 			}
 		}
@@ -136,7 +136,7 @@ public:
 		for (size_t i=0; i<oldFiles_.size(); ++i) {
 			auto found = find(newFiles_.begin(), newFiles_.end(), oldFiles_[i]);
 			if (found == newFiles_.end()) {
-				if (DeleteFile(oldFiles_[i].c_str())) {
+				if (fu::rm(oldFiles_[i])) {
 					deletedFiles_.push_back(oldFiles_[i]);
 				}
 				else {
