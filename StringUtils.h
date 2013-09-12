@@ -37,7 +37,7 @@ namespace su {
 	template<typename CharT>
 	inline std::basic_string<CharT>& ltrim(std::basic_string<CharT>& s)
 	{
-		s.erase(s.begin(), find_if(s.begin(), s.end(), not1(ptr_fun<int, int>(isspace))));
+		s.erase(s.begin(), find_if(s.begin(), s.end(), std::not1(std::ptr_fun<int, int>(std::isspace))));
 		return s;
 	}
 
@@ -45,7 +45,7 @@ namespace su {
 	template<typename CharT>
 	inline std::basic_string<CharT>& rtrim(std::basic_string<CharT>& s)
 	{
-		s.erase(find_if(s.rbegin(), s.rend(), not1(ptr_fun<int, int>(isspace))).base(), s.end());
+		s.erase(find_if(s.rbegin(), s.rend(), std::not1(std::ptr_fun<int, int>(std::isspace))).base(), s.end());
 		return s;
 	}
 
