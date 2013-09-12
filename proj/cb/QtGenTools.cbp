@@ -36,6 +36,7 @@
 		<Unit filename="../../QtTool.cpp" />
 		<Unit filename="../../QtTool.h" />
 		<Unit filename="../../StringUtils.h" />
+		<Unit filename="../../Version.h" />
 		<Unit filename="../../main.cpp" />
 		<Extensions>
 			<code_completion />
