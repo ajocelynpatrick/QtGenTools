@@ -27,6 +27,7 @@
 #include "StringUtils.h"
 #include "FileUtils.h"
 #include "QtTool.h"
+#include "Version.h"
 
 #ifdef _WIN32
 #include <Windows.h>
@@ -120,7 +121,7 @@ public:
 		if (outD.back() != fu::pathSep) outD.push_back(fu::pathSep);
 
 		if (!fu::isDir(outD)) {
-			if (!CreateDirectory(outD.c_str(), NULL)) {
+			if (!fu::mkDir(outD)) {
 				throw runtime_error("could not create the output directory");
 			}
 		}
@@ -136,7 +137,7 @@ public:
 		for (size_t i=0; i<oldFiles_.size(); ++i) {
 			auto found = find(newFiles_.begin(), newFiles_.end(), oldFiles_[i]);
 			if (found == newFiles_.end()) {
-				if (DeleteFile(oldFiles_[i].c_str())) {
+				if (fu::rm(oldFiles_[i])) {
 					deletedFiles_.push_back(oldFiles_[i]);
 				}
 				else {
@@ -240,18 +241,24 @@ private:
 
 
 
-void usage(const string& err)
+void usage(const string& err="")
 {
-	cout << "Usage: QtGenTools --inD=<IN_DIR> --outD=<OUT_DIR> [Options]\n";
 	if (err.size() > 0) {
 		cout << "Error: " << err << "\n";
 	}
-	cout << "Options:\n"
-	     << "  --inD=<in_dir>    Specify the input directory (mandatory)\n"
-	     << "  --outD=<out_dir>  Specify the output directory (mandatory)\n"
-	     << "  --mocOpts=<opts>  Command line options given to moc\n"
-	     << "  --uicOpts=<opts>  Command line options given to uic\n"
-	     << "  --rccOpts=<opts>  Command line options given to rcc\n";
+	cout <<
+		"Usage: QtGenTools --inD=<IN_DIR> --outD=<OUT_DIR> [Options]\n"
+		"       QtGenTools --version\n"
+		"       QtGenTools --help\n"
+		"    version " VERSION_STR "\n"
+		"Options:\n"
+		"  --inD=<in_dir>    Specify the input directory (mandatory)\n"
+		"  --outD=<out_dir>  Specify the output directory (mandatory)\n"
+		"  --mocOpts=<opts>  Command line options given to moc\n"
+		"  --uicOpts=<opts>  Command line options given to uic\n"
+		"  --rccOpts=<opts>  Command line options given to rcc\n"
+		"  --version         Prints the version and exits\n"
+		"  --help            Prints this message and exits\n";
 }
 
 
@@ -261,7 +268,15 @@ int main (int argc, char *argv[])
 
 	for (int i=1; i<argc; ++i) {
 		string arg = string(argv[i]);
-		if (su::beginsWith(arg, string("--qt="))) {
+		if (arg == "--help") {
+			usage();
+			return 0;
+		}
+		else if (arg == "--version") {
+			std::cout << VERSION_STR "\n";
+			return 0;
+		}
+		else if (su::beginsWith(arg, string("--qt="))) {
 			qtBinPath = arg.substr(5);
 			if (qtBinPath.back() == '\\') qtBinPath.push_back('\\');
 			qtBinPath += "bin\\";

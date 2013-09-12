@@ -30,12 +30,16 @@
 
 #ifdef _WIN32
 #include <Windows.h>
+#else
+#include <sys/types.h>
+#include <sys/stat.h>
 #endif
 
 #include <algorithm>
 #include <fstream>
 #include <sstream>
 #include <iostream>
+#include <stdexcept>
 #include <cstdlib>
 #include <cstdio>
 
@@ -68,8 +72,11 @@ bool QtTool::needsToRun(const std::string& inFile, const std::string& outFile)
 
 	return CompareFileTime(&lstInMod, &lstOutMod) == 1;
 #else
-	// TODO implement modification date comparison linux and mac
-	return true;
+	struct stat stIn;
+	struct stat stOut;
+	stat(inFile.c_str(), &stIn);
+	stat(outFile.c_str(), &stOut);
+	return stIn.st_mtime > stOut.st_mtime;
 #endif
 }
 
@@ -81,6 +88,14 @@ bool QtTool::runIfNeeded(const std::string& inFile, const std::string& outFile)
 {
 	if (needsToRun(inFile, outFile)) {
 
+		ostringstream cmd;
+		cmd << exePath_;
+		if (cmdOpts_.size() > 0) {
+			cmd << " " << cmdOpts_;
+		}
+		cmd << " -o " << outFile << " " << inFile;
+
+#ifdef _WIN32
 		const size_t bufSize = 4096;
 		char buf [bufSize];
 
@@ -95,12 +110,6 @@ bool QtTool::runIfNeeded(const std::string& inFile, const std::string& outFile)
 		si.hStdInput = NULL;
 		si.dwFlags |= STARTF_USESTDHANDLES;
 
-		ostringstream cmd;
-		cmd << exePath_;
-		if (cmdOpts_.size() > 0) {
-			cmd << " " << cmdOpts_;
-		}
-		cmd << " -o " << outFile << " " << inFile;
 		string cmdOpts = cmd.str();
 		for(size_t i=0; i<cmdOpts.size(); ++i) {
 			buf[i] = cmdOpts[i];
@@ -124,7 +133,6 @@ bool QtTool::runIfNeeded(const std::string& inFile, const std::string& outFile)
 		  ) {
 			cerr << "CreateProcess err " << GetLastError() << "\n";
 			throw runtime_error("cannot start process");
-			return false;
 		}
 		WaitForSingleObject(pi.hProcess, INFINITE);
 
@@ -134,6 +142,24 @@ bool QtTool::runIfNeeded(const std::string& inFile, const std::string& outFile)
 		if (!CloseHandle(pi.hThread)) {
 			cerr << "close handle thread\n";
 		}
+
+#else
+
+		FILE *handle = popen(cmd.str().c_str(), "r");
+
+		if (handle == NULL) {
+			throw runtime_error("cannot start process");
+		}
+
+		char buf[64];
+		size_t readn;
+		while ((readn = fread(buf, 1, sizeof(buf), handle)) > 0) {
+			fwrite(buf, 1, readn, stdout);
+		}
+
+		pclose(handle);
+
+#endif
 
 		return true;
 	}
@@ -145,7 +171,11 @@ bool QtTool::runIfNeeded(const std::string& inFile, const std::string& outFile)
 
 string QtMocTool::exePath(const string& qtBinPath)
 {
+#ifdef _WIN32
 	return qtBinPath + "moc.exe";
+#else
+	return qtBinPath + "moc";
+#endif // _WIN32
 }
 
 
@@ -194,7 +224,11 @@ std::string QtMocTool::getOutFilename (const string& inFileName)
 
 string QtUicTool::exePath(const string& qtBinPath)
 {
+#ifdef _WIN32
 	return qtBinPath + "uic.exe";
+#else
+	return qtBinPath + "uic";
+#endif // _WIN32
 }
 
 
@@ -229,7 +263,11 @@ string QtUicTool::getOutFilename (const string& inFileName)
 
 string QtRccTool::exePath(const string& qtBinPath)
 {
+#ifdef _WIN32
 	return qtBinPath + "rcc.exe";
+#else
+	return qtBinPath + "rcc";
+#endif // _WIN32
 }
 
 
