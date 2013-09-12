@@ -53,7 +53,7 @@ string guessQtBinPath()
 {
 	string qtBinPath;
 	char *qt = getenv("QT5");
-	if (!qt) {
+	if (qt) {
 		qtBinPath = string(qt);
 		if (qtBinPath.back() != fu::pathSep) qtBinPath.push_back(fu::pathSep);
 		qtBinPath.append("bin");
