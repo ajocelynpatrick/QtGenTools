@@ -96,7 +96,7 @@ bool QtTool::runIfNeeded(const std::string& inFile, const std::string& outFile)
 		cmd << " -o " << outFile << " " << inFile;
 
 #ifdef _WIN32
-		const size_t bufSize = 4096;
+		const size_t bufSize = 512;
 		char buf [bufSize];
 
 		STARTUPINFO si;
