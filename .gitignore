@@ -1,6 +1,7 @@
 # General
 Debug/
 Release/
+*.DS_Store
 
 # MSVC
 ipch/
@@ -12,6 +13,15 @@ ipch/
 # CodeBlocks
 *.layout
 *.depend
+
+# XCode
+*.pbxuser
+*.mode1v3
+*.mode2v3
+*.perspectivev3
+*.xcuserstate
+project.xcworkspace/
+xcuserdata/
 
 # CMAKE
 CMakeFiles/
