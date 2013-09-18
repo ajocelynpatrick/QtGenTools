@@ -18,6 +18,7 @@ Description:
 	
 	This utility is useful if you want to use Qt without qmake, for example
 	with Microsoft Visual C++ Express.
+	It is compatible with Windows, Linux and MacOSX.
 
 
 	Moc:
@@ -66,6 +67,6 @@ Example of use:
 	precompiled headers.
 	
 	This command can be added as a pre build step in your favorite IDE or
-	build system in order to updated generated files when needed.
+	build system in order to update the generated files when needed.
 	
 Enjoy!
