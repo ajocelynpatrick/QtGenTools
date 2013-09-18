@@ -55,7 +55,7 @@ namespace fu {
 
 
 	template<typename CharT>
-	inline std::tuple<std::basic_string<CharT>, std::basic_string<CharT> >
+	std::tuple<std::basic_string<CharT>, std::basic_string<CharT> >
 	splitExt(const std::basic_string<CharT>& filename)
 	{
 		size_t pos = filename.rfind(CharT('.'));
@@ -74,8 +74,7 @@ namespace fu {
 		return (INVALID_FILE_ATTRIBUTES != GetFileAttributes(path.c_str()));
 #else
 		struct stat st;
-		int res = stat(path.c_str(), &st);
-		return res == 0;
+		return 0 == stat(path.c_str(), &st);
 #endif
 	}
 
