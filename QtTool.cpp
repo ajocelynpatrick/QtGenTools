@@ -50,6 +50,12 @@ using namespace std;
 
 bool QtTool::needsToRun(const std::string& inFile, const std::string& outFile)
 {
+	if (!fu::isFile(inFile)) {
+		return false;
+	}
+	if (!fu::isFile(outFile)) {
+		return true;
+	}
 #ifdef _WIN32
 	HANDLE hInFile = CreateFile(inFile.c_str(), GENERIC_READ, FILE_SHARE_READ, NULL,
 	                            OPEN_EXISTING, 0, NULL);
@@ -96,7 +102,7 @@ bool QtTool::runIfNeeded(const std::string& inFile, const std::string& outFile)
 		cmd << " -o " << outFile << " " << inFile;
 
 #ifdef _WIN32
-		const size_t bufSize = 4096;
+		const size_t bufSize = 512;
 		char buf [bufSize];
 
 		STARTUPINFO si;

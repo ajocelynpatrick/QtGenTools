@@ -60,7 +60,7 @@ namespace su {
 
 
 	template<typename CharT>
-	inline std::basic_string<CharT>& replace(
+	std::basic_string<CharT>& replace(
 		std::basic_string<CharT>& s,
 		const std::basic_string<CharT>& pattern,
 		const std::basic_string<CharT>& repl)
@@ -76,7 +76,7 @@ namespace su {
 
 
 	template<typename CharT, class OutputIt>
-	inline void split(const std::basic_string<CharT>& s, CharT delim, OutputIt out)
+	void split(const std::basic_string<CharT>& s, CharT delim, OutputIt out)
 	{
 		std::basic_istringstream<CharT> iss (s);
 		std::basic_string<CharT> elem;
@@ -91,8 +91,7 @@ namespace su {
 	template<typename CharT>
 	inline bool beginsWith(const std::basic_string<CharT>& str, const std::basic_string<CharT>& pattern)
 	{
-		size_t pos = str.find(pattern);
-		return pos == 0;
+		return size_t(0) == str.find(pattern);
 	}
 
 

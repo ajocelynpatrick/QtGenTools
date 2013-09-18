@@ -1,0 +1,221 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		A5306D2217E794CD00FC8973 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A5306D1D17E794CD00FC8973 /* main.cpp */; };
+		A5306D2317E794CD00FC8973 /* QtTool.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A5306D1E17E794CD00FC8973 /* QtTool.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		A5306D0E17E7944500FC8973 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		A5306D1017E7944500FC8973 /* QtGenTools */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = QtGenTools; sourceTree = BUILT_PRODUCTS_DIR; };
+		A5306D1C17E794CD00FC8973 /* FileUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FileUtils.h; path = ../FileUtils.h; sourceTree = "<group>"; };
+		A5306D1D17E794CD00FC8973 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = ../main.cpp; sourceTree = "<group>"; };
+		A5306D1E17E794CD00FC8973 /* QtTool.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = QtTool.cpp; path = ../QtTool.cpp; sourceTree = "<group>"; };
+		A5306D1F17E794CD00FC8973 /* QtTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QtTool.h; path = ../QtTool.h; sourceTree = "<group>"; };
+		A5306D2017E794CD00FC8973 /* StringUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StringUtils.h; path = ../StringUtils.h; sourceTree = "<group>"; };
+		A5306D2117E794CD00FC8973 /* Version.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Version.h; path = ../Version.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		A5306D0D17E7944500FC8973 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		A5306CF717E7925300FC8973 = {
+			isa = PBXGroup;
+			children = (
+				A5306D1B17E794A900FC8973 /* Source */,
+				A5306D1117E7944500FC8973 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		A5306D1117E7944500FC8973 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A5306D1017E7944500FC8973 /* QtGenTools */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A5306D1B17E794A900FC8973 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				A5306D1C17E794CD00FC8973 /* FileUtils.h */,
+				A5306D1D17E794CD00FC8973 /* main.cpp */,
+				A5306D1E17E794CD00FC8973 /* QtTool.cpp */,
+				A5306D1F17E794CD00FC8973 /* QtTool.h */,
+				A5306D2017E794CD00FC8973 /* StringUtils.h */,
+				A5306D2117E794CD00FC8973 /* Version.h */,
+			);
+			name = Source;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		A5306D0F17E7944500FC8973 /* QtGenTools */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A5306D1817E7944500FC8973 /* Build configuration list for PBXNativeTarget "QtGenTools" */;
+			buildPhases = (
+				A5306D0C17E7944500FC8973 /* Sources */,
+				A5306D0D17E7944500FC8973 /* Frameworks */,
+				A5306D0E17E7944500FC8973 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = QtGenTools;
+			productName = QtGenTools;
+			productReference = A5306D1017E7944500FC8973 /* QtGenTools */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		A5306CF917E7925300FC8973 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0440;
+			};
+			buildConfigurationList = A5306CFC17E7925300FC8973 /* Build configuration list for PBXProject "QtGenTools" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = A5306CF717E7925300FC8973;
+			productRefGroup = A5306D1117E7944500FC8973 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				A5306D0F17E7944500FC8973 /* QtGenTools */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		A5306D0C17E7944500FC8973 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A5306D2217E794CD00FC8973 /* main.cpp in Sources */,
+				A5306D2317E794CD00FC8973 /* QtTool.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		A5306CFE17E7925300FC8973 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Debug;
+		};
+		A5306CFF17E7925300FC8973 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Release;
+		};
+		A5306D1917E7944500FC8973 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		A5306D1A17E7944500FC8973 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		A5306CFC17E7925300FC8973 /* Build configuration list for PBXProject "QtGenTools" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A5306CFE17E7925300FC8973 /* Debug */,
+				A5306CFF17E7925300FC8973 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A5306D1817E7944500FC8973 /* Build configuration list for PBXNativeTarget "QtGenTools" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A5306D1917E7944500FC8973 /* Debug */,
+				A5306D1A17E7944500FC8973 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = A5306CF917E7925300FC8973 /* Project object */;
+}
